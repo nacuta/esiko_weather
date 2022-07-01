@@ -38,10 +38,13 @@ dependencies:
 
 dev_dependencies:
   bloc_test: ^9.0.3
+  device_preview: ^1.1.0
+  flex_color_scheme: ^5.0.1
   flutter_hooks: ^0.18.4
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
+  google_fonts: ^3.0.1
   http: ^0.13.4
   intl: ^0.17.0
 
@@ -56,8 +59,7 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/cloud.png
-    - assets/sun.png
+    - assets/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

@@ -1,8 +1,9 @@
 import 'dart:convert' as json;
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'package:testingbloc/current.dart';
+import 'package:testingbloc/Data/current.dart';
 
 class ApiData {
   Future<CurrentWeather> getDataFromJson(String query) async {
@@ -20,15 +21,17 @@ class ApiData {
       params['aqi'] = airQuality;
       params['alerts'] = alerts;
     }
-    final url = Uri.http(_host, unencodedPath, params);
-    final results = await http.get(url);
-    if (results.statusCode == 200) {
-      final decodedJson = json.jsonDecode(results.body);
-      var x = CurrentWeather.fromJson(decodedJson);
-      return x;
-    } else {
-      throw ErrorDescription('No api target found');
-    }
+    // final url = Uri.http(_host, unencodedPath, params);
+    // final results = await http.get(url);
+    // if (results.statusCode == 200) {
+    String jsonContent = await rootBundle.loadString("assets/appl.json");
+    final decodedJson = json.jsonDecode(jsonContent);
+    //   final decodedJson = json.jsonDecode(results.body);
+    var x = CurrentWeather.fromJson(decodedJson);
+    return x;
+    // } else {
+    //   throw ErrorDescription('No api target found');
+    // }
   }
 }
 

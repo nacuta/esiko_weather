@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:testingbloc/current.dart';
-import 'package:testingbloc/data.dart';
+import 'package:testingbloc/Data/current.dart';
+import 'package:testingbloc/Data/data.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
