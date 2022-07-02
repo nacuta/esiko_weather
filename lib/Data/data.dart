@@ -21,17 +21,22 @@ class ApiData {
       params['aqi'] = airQuality;
       params['alerts'] = alerts;
     }
+    // fot http request
     // final url = Uri.http(_host, unencodedPath, params);
     // final results = await http.get(url);
     // if (results.statusCode == 200) {
-    String jsonContent = await rootBundle.loadString("assets/appl.json");
-    final decodedJson = json.jsonDecode(jsonContent);
     //   final decodedJson = json.jsonDecode(results.body);
-    var x = CurrentWeather.fromJson(decodedJson);
-    return x;
+    // var x = CurrentWeather.fromJson(decodedJson);
+    // return x;
     // } else {
     //   throw ErrorDescription('No api target found');
     // }
+
+    // for local json
+    String jsonContent = await rootBundle.loadString("assets/appl.json");
+    final decodedJson = json.jsonDecode(jsonContent);
+    var x = CurrentWeather.fromJson(decodedJson);
+    return x;
   }
 }
 

@@ -31,7 +31,7 @@ class TblForcastGlassmorphView extends StatelessWidget {
               // 4: FixedColumnWidth(100.0),
             },
             defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-            children: List.generate(3, (int index) {
+            children: List.generate(5, (int index) {
               var addingDate = moonLanding.add(Duration(days: index));
               var dayOfTheWeek = DateFormat('EEEE').format(addingDate);
 

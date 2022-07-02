@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:testingbloc/home.dart';
 import 'package:testingbloc/home_page.dart';
 
 void main() {
