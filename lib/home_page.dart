@@ -116,47 +116,47 @@ class _HomePageInitialState extends State<HomePageInitial> {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       SizedBox(
-                        height: 150,
-                        child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: List.generate(5, (index) {
-                              var addingDate =
-                                  moonLanding.add(Duration(days: index));
+                          height: 150,
+                          child: ListView.builder(
+                              itemCount: 5,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                var addingDate =
+                                    moonLanding.add(Duration(days: index));
 
-                              var dayOfTheWeek =
-                                  DateFormat('EEE').format(addingDate);
-                              return Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: Row(
-                                  children: [
-                                    SmallDisplayForcast(
-                                      forcastDay: dayOfTheWeek,
-                                      imagePath:
-                                          'https:${futureApiData.forecast.forecastday[index].day.condition.icon}',
-                                      forcastMaxTemp:
-                                          '${futureApiData.forecast.forecastday[index].day.maxtempC?.floor()}\u00b0',
-                                      forcastMinTemp:
-                                          '${futureApiData.forecast.forecastday[index].day.mintempC.floor()}\u00b0',
-                                    ),
-                                    // const SizedBox(
-                                    //   width: 10,
-                                    // )
-                                  ],
-                                ),
-                              );
-                            })
+                                var dayOfTheWeek =
+                                    DateFormat('EEE').format(addingDate);
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      SmallDisplayForcast(
+                                        forcastDay: dayOfTheWeek,
+                                        imagePath:
+                                            'https:${futureApiData.forecast.forecastday[index].day.condition.icon}',
+                                        forcastMaxTemp:
+                                            '${futureApiData.forecast.forecastday[index].day.maxtempC?.floor()}\u00b0',
+                                        forcastMinTemp:
+                                            '${futureApiData.forecast.forecastday[index].day.mintempC.floor()}\u00b0',
+                                      ),
+                                      // const SizedBox(
+                                      //   width: 10,
+                                      // )
+                                    ],
+                                  ),
+                                );
+                              })
 
-                            // TblForcastGlassmorphView(
-                            //     futureApiData: futureApiData,
-                            //     moonLanding: moonLanding),
-                            ),
-                      ),
+                          // TblForcastGlassmorphView(
+                          //     futureApiData: futureApiData,
+                          //     moonLanding: moonLanding),
+                          ),
                     ],
                   ),
                 ),
