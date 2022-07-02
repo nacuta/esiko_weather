@@ -2,6 +2,7 @@ import 'package:testingbloc/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:testingbloc/Data/current.dart';
 import 'package:testingbloc/Widgets/glassmorphism.dart';
+// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 
 class TblForcastGlassmorphView extends StatelessWidget {
@@ -21,6 +22,7 @@ class TblForcastGlassmorphView extends StatelessWidget {
       child: GlassMorphism(
         start: 0.9,
         end: 0.6,
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Table(
