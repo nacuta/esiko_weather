@@ -1,12 +1,17 @@
 class CurrentWeather {
-  CurrentWeather({
+  CurrentWeather(
+    this.error, {
     required this.location,
     required this.current,
     required this.forecast,
   });
-  late final Location location;
-  late final Current current;
-  late final Forecast forecast;
+  Location? location;
+  Current? current;
+  Forecast? forecast;
+  String? error;
+  CurrentWeather.withError(String errorMessage) {
+    error = errorMessage;
+  }
 
   CurrentWeather.fromJson(Map<String, dynamic> json) {
     location = Location.fromJson(json['location']);
@@ -16,9 +21,9 @@ class CurrentWeather {
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['location'] = location.toJson();
-    _data['current'] = current.toJson();
-    _data['forecast'] = forecast.toJson();
+    _data['location'] = location?.toJson();
+    _data['current'] = current?.toJson();
+    _data['forecast'] = forecast?.toJson();
     return _data;
   }
 }

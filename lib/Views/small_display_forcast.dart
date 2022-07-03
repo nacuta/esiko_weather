@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:testingbloc/Data/current.dart';
 
 class SmallDisplayForcast extends StatelessWidget {
-  const SmallDisplayForcast(
-      {super.key,
-      required this.imagePath,
-      required this.forcastDay,
-      required this.forcastMaxTemp,
-      required this.forcastMinTemp});
-  final String imagePath;
+  const SmallDisplayForcast({
+    super.key,
+    required this.index,
+    required this.futureApiData,
+    required this.forcastDay,
+  });
   final String forcastDay;
-  final String forcastMaxTemp;
-  final String forcastMinTemp;
+  final int index;
+  final CurrentWeather futureApiData;
 
   @override
   Widget build(BuildContext context) {
@@ -39,17 +39,19 @@ class SmallDisplayForcast extends StatelessWidget {
               ),
             ),
             Image(
-              image: NetworkImage(imagePath),
+              image: NetworkImage(
+                'https:${futureApiData.forecast?.forecastday[index].day.condition.icon}',
+              ),
               height: 40,
             ),
             Text(
-              forcastMaxTemp,
+              '${futureApiData.forecast?.forecastday[index].day.maxtempC?.floor()}\u00b0',
               style: const TextStyle(
                 color: Colors.white,
               ),
             ),
             Text(
-              forcastMinTemp,
+              '${futureApiData.forecast?.forecastday[index].day.mintempC.floor()}\u00b0',
             ),
           ],
         ),

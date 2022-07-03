@@ -61,7 +61,7 @@ class TblForcastGlassmorphView extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Image.network(
-                        'https:${futureApiData.forecast.forecastday[index].day.condition.icon}',
+                        'https:${futureApiData.forecast?.forecastday[index].day.condition.icon}',
                         height: 50,
                       ),
                     ),
@@ -70,14 +70,14 @@ class TblForcastGlassmorphView extends StatelessWidget {
                     child: Row(
                       children: [
                         Text(
-                          '${futureApiData.forecast.forecastday[index].day.maxtempC}\u00b0',
+                          '${futureApiData.forecast?.forecastday[index].day.maxtempC}\u00b0',
                           style: googleFontStyle.copyWith(fontSize: 16),
                         ),
                         const SizedBox(
                           width: 10,
                         ),
                         Text(
-                          '${futureApiData.forecast.forecastday[index].day.mintempC}\u00b0',
+                          '${futureApiData.forecast?.forecastday[index].day.mintempC}\u00b0',
                           style: googleFontStyle.copyWith(fontSize: 16),
                         ),
                       ],

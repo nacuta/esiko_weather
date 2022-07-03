@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:google_fonts/google_fonts.dart';
-import 'package:testingbloc/constants.dart';
 import 'package:testingbloc/Widgets/icon_delegate.dart';
+import 'package:testingbloc/utils.dart';
 
 class TempAndIcon extends StatelessWidget {
   const TempAndIcon(
@@ -23,6 +23,7 @@ class TempAndIcon extends StatelessWidget {
             Center(
               child: Text(
                 '$currentTem\u00b0',
+                //keeping thei here because copyWith it does not update the fontWeight
                 style: GoogleFonts.oswald(
                     height: 1,
                     fontWeight: FontWeight.w400,
@@ -37,9 +38,6 @@ class TempAndIcon extends StatelessWidget {
                 codetext: codeTextSituation,
               ),
             ),
-            // Image.network(
-            //   'https:${futureApiData.forecast.forecastday[0].day.condition.icon}',
-            // ),
           ],
         ),
       ),

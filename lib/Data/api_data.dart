@@ -29,14 +29,20 @@ class ApiData {
     // var x = CurrentWeather.fromJson(decodedJson);
     // return x;
     // } else {
-    //   throw ErrorDescription('No api target found');
+    //      return CurrentWeather.withError("Data not found / Connection issue");
+
     // }
 
-    // for local json
-    String jsonContent = await rootBundle.loadString("assets/appl.json");
-    final decodedJson = json.jsonDecode(jsonContent);
-    var x = CurrentWeather.fromJson(decodedJson);
-    return x;
+    try {
+      // for local json
+      String jsonContent = await rootBundle.loadString("assets/appl.json");
+      final decodedJson = json.jsonDecode(jsonContent);
+      var x = CurrentWeather.fromJson(decodedJson);
+      return x;
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      return CurrentWeather.withError("Data not found / Connection issue");
+    }
   }
 }
 

@@ -37,8 +37,10 @@ dependencies:
   flutter_bloc: ^8.0.1
 
 dev_dependencies:
+  bloc: ^8.0.3
   bloc_test: ^9.0.3
   device_preview: ^1.1.0
+  equatable: ^2.0.3
   flex_color_scheme: ^5.0.1
   flutter_hooks: ^0.18.4
   flutter_lints: ^2.0.0
