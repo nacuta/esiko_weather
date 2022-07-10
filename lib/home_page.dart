@@ -11,6 +11,8 @@ import 'Data/api_data.dart';
 import 'Views/small_display_forcast.dart';
 import 'package:testingbloc/utils.dart';
 
+import 'chart.dart';
+
 class HomePageInitial extends StatefulWidget {
   const HomePageInitial({super.key});
 
@@ -135,10 +137,21 @@ class _HomePageInitialState extends State<HomePageInitial> {
                           codeTextSituation: apiResponse
                               .forecast!.forecastday[0].day.condition.text),
                       Container(
+                        padding: EdgeInsets.symmetric(vertical: 20),
+                        // color: Colors.red,
                         height: 200,
-                        //Todo: implement charts here
-                        child: Text("Charts"),
+                        width: double.infinity,
+                        child: Container(
+                          height: 100,
+
+                          //Todo: implement charts here
+                          child: LineChartSample1(),
+                        ),
                       ),
+                      Text(
+                        '01,02,03,04,05',
+                        style: TextStyle(letterSpacing: 20),
+                      )
                     ],
                   ),
                 ),
