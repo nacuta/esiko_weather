@@ -8,11 +8,18 @@ abstract class DataFromJsonState extends Equatable {
 
 class DataFromJsonInitial extends DataFromJsonState {}
 
-class DataFromJsonLoading extends DataFromJsonState {}
+class DataFromJsonLoading extends DataFromJsonState {
+  final String city;
+
+  DataFromJsonLoading(this.city);
+}
 
 class DataFromJsonLoaded extends DataFromJsonState {
   final CurrentWeather apiResponse;
   DataFromJsonLoaded(this.apiResponse);
+
+  @override
+  List<Object?> get props => [apiResponse];
 }
 
 class DataFromJsonEror extends DataFromJsonState {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:testingbloc/Views/search_page.dart';
 import 'package:testingbloc/Widgets/glassmorphism.dart';
 import 'package:testingbloc/bloc/data_from_json_bloc.dart';
 import 'package:testingbloc/constants.dart';
@@ -22,10 +23,11 @@ class HomePageInitial extends StatefulWidget {
 
 class _HomePageInitialState extends State<HomePageInitial> {
   final DataFromJsonBloc _meteoBloc = DataFromJsonBloc();
+  String city = 'Arad';
 
   @override
   void initState() {
-    _meteoBloc.add((GetListFromJson()));
+    _meteoBloc.add((GetListFromJson(city)));
     super.initState();
   }
 
@@ -68,6 +70,10 @@ class _HomePageInitialState extends State<HomePageInitial> {
       final moonLanding = DateTime.parse(date);
       var dateNow = date.substring(0, 10);
 
+      //search bar
+      Icon customIcon = const Icon(Icons.search);
+      Widget customSearchBar = const Text('My Personal Journal');
+
       return Scaffold(
         body: SafeArea(
           child: Container(
@@ -82,78 +88,82 @@ class _HomePageInitialState extends State<HomePageInitial> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Todo : Implement a search bar for location to be added
-                GlassMorphism(
-                  start: 0.6,
-                  end: 0.9,
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(25),
-                      bottomRight: Radius.circular(25)),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                            icon: const Icon(
-                              Icons.more_vert,
-                              size: 25,
-                            ),
-                            onPressed: () {},
+                Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          icon: const Icon(
+                            Icons.more_vert,
+                            size: 25,
                           ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.location_on_outlined,
-                                size: 25,
-                                color: Colors.deepPurple.shade700,
-                              ),
-                              Text(
-                                apiResponse.location!.name,
-                                style: googleFontStyle.copyWith(fontSize: 25),
-                              ),
-                            ],
-                          ),
-                          IconButton(
-                            icon: const Icon(
-                              Icons.search,
-                              size: 30,
-                            ),
-                            onPressed: () {},
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            dateNow,
-                            style: googleFontStyle.copyWith(fontSize: 15),
-                          )
-                        ],
-                      ),
-                      TempAndIcon(
-                          currentTem: currentTemp,
-                          codeTextSituation: apiResponse
-                              .forecast!.forecastday[0].day.condition.text),
-                      Container(
-                        padding: EdgeInsets.symmetric(vertical: 20),
-                        // color: Colors.red,
-                        height: 200,
-                        width: double.infinity,
-                        child: Container(
-                          height: 100,
-
-                          //Todo: implement charts here
-                          child: LineChartSample1(),
+                          onPressed: () {},
                         ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.location_on_outlined,
+                              size: 25,
+                              color: Colors.deepPurple.shade700,
+                            ),
+                            Text(
+                              apiResponse.location!.name,
+                              style: googleFontStyle.copyWith(fontSize: 25),
+                            ),
+                          ],
+                        ),
+                        // Todo : Implement a search bar for location to be added
+                        IconButton(
+                          icon: const Icon(
+                            Icons.search,
+                            size: 30,
+                          ),
+                          onPressed: () async {
+                            // // method to show the search bar
+                            // showSearch(
+                            //   context: context,
+                            //   // delegate to customize the search bar
+                            //   delegate: CustomSearchDelegate(),
+                            // );
+
+                            final city = await Navigator.of(context)
+                                .push(SearchPage.route());
+                            await context
+                                .read<DataFromJsonBloc>()
+                                .getApiResponse(city);
+                          },
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          dateNow,
+                          style: googleFontStyle.copyWith(fontSize: 15),
+                        )
+                      ],
+                    ),
+                    TempAndIcon(
+                      currentTem: currentTemp,
+                      codeTextSituation: apiResponse
+                          .forecast!.forecastday[0].day.condition.text,
+                    ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Container(
+                        height: 200,
+                        width: MediaQuery.of(context).size.width * 2,
+                        //Todo: implement charts here
+                        child: ChartPageView(),
                       ),
-                      Text(
-                        '01,02,03,04,05',
-                        style: TextStyle(letterSpacing: 20),
-                      )
-                    ],
-                  ),
+                    ),
+                    // Text(
+                    //   '01,02,03,04,05',
+                    //   style: TextStyle(letterSpacing: 20),
+                    // )
+                  ],
                 ),
                 const SizedBox(
                   height: 15,

@@ -6,4 +6,11 @@ abstract class DataFromJsonEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class GetListFromJson extends DataFromJsonEvent {}
+class GetListFromJson extends DataFromJsonEvent {
+  final String city;
+
+  GetListFromJson(this.city);
+
+  @override
+  List<Object?> get props => [city];
+}
