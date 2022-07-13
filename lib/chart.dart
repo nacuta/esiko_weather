@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:testingbloc/Data/current.dart';
 
 class ChartPageView extends StatefulWidget {
-  const ChartPageView({super.key});
+  const ChartPageView({super.key, required this.forecastData});
+  final List<Hour>? forecastData;
 
   @override
   State<ChartPageView> createState() => _ChartPageViewState();
 }
 
 class _ChartPageViewState extends State<ChartPageView> {
+  List<Hour>? get weatherData {
+    return widget.forecastData;
+  }
+
   SideTitles get _bottomTitles => SideTitles(
         showTitles: true,
         reservedSize: 22,

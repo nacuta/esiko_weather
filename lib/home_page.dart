@@ -22,53 +22,52 @@ class HomePageInitial extends StatefulWidget {
 }
 
 class _HomePageInitialState extends State<HomePageInitial> {
-  final DataFromJsonBloc _meteoBloc = DataFromJsonBloc();
-  String city = 'Arad';
-
-  @override
-  void initState() {
-    _meteoBloc.add((GetListFromJson(city)));
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => _meteoBloc,
-      child: BlocListener<DataFromJsonBloc, DataFromJsonState>(
-        listener: (context, state) {
-          if (state is DataFromJsonEror) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message!),
-              ),
-            );
-          }
-        },
-        child: BlocBuilder<DataFromJsonBloc, DataFromJsonState>(
-            builder: (context, state) {
-          if (state is DataFromJsonInitial) {
-            return const CircularProgressIndicator();
-          }
-          if (state is DataFromJsonLoading) {
-            return const CircularProgressIndicator();
-          }
-          if (state is DataFromJsonLoaded) {
-            return _firstPageView(context, state.apiResponse);
-          } else {
-            return Container();
-          }
-        }),
-      ),
+    return BlocListener<DataFromJsonBloc, DataFromJsonState>(
+      listener: (context, state) {
+        if (state is DataFromJsonEror) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message!),
+            ),
+          );
+        }
+        if (state is DataFromJsonLoaded) {
+          var x = state.apiResponse.forecast?.forecastday[0].hour;
+          var a = state.apiResponse.forecast?.forecastday[1].hour;
+          var y = x?.sublist(DateTime.now().hour, 24);
+
+          print(x);
+          print(DateTime.now().hour);
+          print(y?.first);
+        }
+      },
+      child: BlocBuilder<DataFromJsonBloc, DataFromJsonState>(
+          builder: (context, state) {
+        if (state is DataFromJsonInitial) {
+          return Center(child: Text(state.toString()));
+        }
+        if (state is DataFromJsonLoading) {
+          return const CircularProgressIndicator();
+        }
+        if (state is DataFromJsonLoaded) {
+          return _firstPageView(context, state.apiResponse);
+        } else {
+          return Container();
+        }
+      }),
     );
   }
 
   Widget _firstPageView(BuildContext context, CurrentWeather? apiResponse) {
     if (apiResponse != null) {
+      List<Hour>? forecast = apiResponse.forecast?.forecastday[0].hour;
       var currentTemp = apiResponse.current!.tempC.toInt();
       var date = normalizeStringToParse(apiResponse.location!.localtime);
       final moonLanding = DateTime.parse(date);
       var dateNow = date.substring(0, 10);
+      print(forecast.toString());
 
       //search bar
       Icon customIcon = const Icon(Icons.search);
@@ -152,11 +151,13 @@ class _HomePageInitialState extends State<HomePageInitial> {
                     ),
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
-                      child: Container(
+                      child: SizedBox(
                         height: 200,
                         width: MediaQuery.of(context).size.width * 2,
                         //Todo: implement charts here
-                        child: ChartPageView(),
+                        child: ChartPageView(
+                          forecastData: forecast,
+                        ),
                       ),
                     ),
                     // Text(
