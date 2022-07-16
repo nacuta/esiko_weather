@@ -37,10 +37,29 @@ class _HomePageInitialState extends State<HomePageInitial> {
           var x = state.apiResponse.forecast?.forecastday[0].hour;
           var a = state.apiResponse.forecast?.forecastday[1].hour;
           var y = x?.sublist(DateTime.now().hour, 24);
+          var gg = [];
+          var d = y?.map((e) => gg.add(e.tempC));
+          y?.addAll(a!);
+          sortf(var y) {
+            for (var i = 0; i < y.length; i++) {
+              print(y[i].tempC);
+            }
+          }
+
+          // sortf(y);
+          // var spots = y?.forEach((element) => element.tempC);
+
+          // .asMap()
+          // .entries
+          // .map((element) => FlSpot(
+          //       element.key.toDouble(),
+          //       element.value.value,
+          //     ))
+          // .toList();
 
           print(x);
           print(DateTime.now().hour);
-          print(y?.first);
+          print(y);
         }
       },
       child: BlocBuilder<DataFromJsonBloc, DataFromJsonState>(
@@ -151,12 +170,16 @@ class _HomePageInitialState extends State<HomePageInitial> {
                     ),
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
-                      child: SizedBox(
-                        height: 200,
+                      child: Container(
+                        margin: EdgeInsets.only(top: 10),
+                        height: 250,
                         width: MediaQuery.of(context).size.width * 2,
                         //Todo: implement charts here
-                        child: ChartPageView(
-                          forecastData: forecast,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: ChartPageView(
+                            forecastData: forecast!,
+                          ),
                         ),
                       ),
                     ),
