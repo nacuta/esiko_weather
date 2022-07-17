@@ -6,3 +6,5 @@ TextStyle googleFontStyle = GoogleFonts.oswald(
     fontWeight: FontWeight.bold,
     foreground: Paint()..shader = linearGradient,
     fontSize: 10);
+
+Color kPrimaryColor = const Color(0xFF5156ED);

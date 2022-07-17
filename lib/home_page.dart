@@ -33,34 +33,6 @@ class _HomePageInitialState extends State<HomePageInitial> {
             ),
           );
         }
-        if (state is DataFromJsonLoaded) {
-          var x = state.apiResponse.forecast?.forecastday[0].hour;
-          var a = state.apiResponse.forecast?.forecastday[1].hour;
-          var y = x?.sublist(DateTime.now().hour, 24);
-          var gg = [];
-          var d = y?.map((e) => gg.add(e.tempC));
-          y?.addAll(a!);
-          sortf(var y) {
-            for (var i = 0; i < y.length; i++) {
-              print(y[i].tempC);
-            }
-          }
-
-          // sortf(y);
-          // var spots = y?.forEach((element) => element.tempC);
-
-          // .asMap()
-          // .entries
-          // .map((element) => FlSpot(
-          //       element.key.toDouble(),
-          //       element.value.value,
-          //     ))
-          // .toList();
-
-          print(x);
-          print(DateTime.now().hour);
-          print(y);
-        }
       },
       child: BlocBuilder<DataFromJsonBloc, DataFromJsonState>(
           builder: (context, state) {
@@ -81,12 +53,11 @@ class _HomePageInitialState extends State<HomePageInitial> {
 
   Widget _firstPageView(BuildContext context, CurrentWeather? apiResponse) {
     if (apiResponse != null) {
-      List<Hour>? forecast = apiResponse.forecast?.forecastday[0].hour;
+      List<Forecastday>? forecast = apiResponse.forecast?.forecastday;
       var currentTemp = apiResponse.current!.tempC.toInt();
       var date = normalizeStringToParse(apiResponse.location!.localtime);
       final moonLanding = DateTime.parse(date);
       var dateNow = date.substring(0, 10);
-      print(forecast.toString());
 
       //search bar
       Icon customIcon = const Icon(Icons.search);
@@ -168,13 +139,13 @@ class _HomePageInitialState extends State<HomePageInitial> {
                       codeTextSituation: apiResponse
                           .forecast!.forecastday[0].day.condition.text,
                     ),
+                    // Implement Chart for hourly temperature
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
-                      child: Container(
-                        margin: EdgeInsets.only(top: 10),
-                        height: 250,
+                      child: SizedBox(
+                        // margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                        height: 200,
                         width: MediaQuery.of(context).size.width * 2,
-                        //Todo: implement charts here
                         child: Padding(
                           padding: const EdgeInsets.only(top: 10),
                           child: ChartPageView(
@@ -190,7 +161,7 @@ class _HomePageInitialState extends State<HomePageInitial> {
                   ],
                 ),
                 const SizedBox(
-                  height: 15,
+                  height: 5,
                 ),
                 SizedBox(
                     height: 150,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:testingbloc/Data/current.dart';
 
+import '../constants.dart';
+
 class SmallDisplayForcast extends StatelessWidget {
   const SmallDisplayForcast({
     super.key,
@@ -16,12 +18,12 @@ class SmallDisplayForcast extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.all(8),
-      color: const Color(0xFF7D73E6),
+      color: kPrimaryColor,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(25.0)),
       ),
       child: SizedBox(
-        width: 70,
+        width: 75,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -52,6 +54,9 @@ class SmallDisplayForcast extends StatelessWidget {
             ),
             Text(
               '${futureApiData.forecast?.forecastday[index].day.mintempC.floor()}\u00b0',
+              style: TextStyle(
+                color: Color(0xFF8786FC),
+              ),
             ),
           ],
         ),

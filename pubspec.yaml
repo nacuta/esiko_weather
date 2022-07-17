@@ -38,7 +38,7 @@ dependencies:
 
 dev_dependencies:
   equatable: ^2.0.3
-  fl_chart: ^0.45.0
+  fl_chart: ^0.55.0
   flutter_charts: any
   flutter_lints: ^2.0.0
   flutter_test:

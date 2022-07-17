@@ -11,7 +11,7 @@ String normalizeStringToParse(String date) {
 
 final Shader linearGradient = LinearGradient(
   colors: <Color>[
-    Colors.deepPurple.shade700,
+    Color(0xFF5156ED),
     const Color(0xFF76B2EF),
   ],
 ).createShader(const Rect.fromLTWH(0.0, 0.0, 470.0, 200.0));
