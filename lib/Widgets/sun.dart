@@ -6,13 +6,13 @@ class Sun extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 105,
-      height: 200,
+      width: 85,
+      height: 100,
       child: Image.asset(
         'assets/sun.png',
-        fit: BoxFit.fitWidth,
-        width: 200,
-        height: 300,
+        // fit: BoxFit.fitWidth,
+        // width: 100,
+        // height: 150,
       ),
     );
   }

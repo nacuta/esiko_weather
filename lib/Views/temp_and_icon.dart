@@ -12,26 +12,30 @@ class TempAndIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 200,
+    return Container(
+      margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
+      height: 140,
       child: Stack(
         alignment: Alignment.center,
-        fit: StackFit.expand,
+        // fit: StackFit.expand,
         children: [
-          Center(
-            child: Text(
-              '$currentTem\u00b0',
-              //keeping thei here because copyWith it does not update the fontWeight
-              style: GoogleFonts.oswald(
-                  height: 1,
-                  fontWeight: FontWeight.w400,
-                  foreground: Paint()..shader = linearGradient,
-                  fontSize: 150),
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Center(
+              child: Text(
+                '$currentTem\u00b0',
+                //keeping thei here because copyWith it does not update the fontWeight
+                style: GoogleFonts.oswald(
+                    height: 1,
+                    fontWeight: FontWeight.w400,
+                    foreground: Paint()..shader = linearGradient,
+                    fontSize: 140),
+              ),
             ),
           ),
           Positioned(
-            right: 85,
-            bottom: -30,
+            right: 100,
+            bottom: 5,
             child: IconDelegate(
               codetext: codeTextSituation,
             ),

@@ -43,7 +43,7 @@ class _ChartPageViewState extends State<ChartPageView> {
 
     return SideTitleWidget(
       axisSide: meta.axisSide,
-      space: 10,
+      space: 5,
       child: Text(getTitles(), style: style),
     );
   }
@@ -51,7 +51,7 @@ class _ChartPageViewState extends State<ChartPageView> {
   SideTitles get _bottomTitles => SideTitles(
         showTitles: true,
         reservedSize: 32,
-        interval: 2,
+        interval: 4,
         getTitlesWidget: bottomTitleWidgets,
       );
 

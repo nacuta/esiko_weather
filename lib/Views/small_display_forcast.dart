@@ -16,11 +16,12 @@ class SmallDisplayForcast extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color KColorNotIndexOne = Colors.white;
     return Card(
       margin: const EdgeInsets.all(8),
-      color: kPrimaryColor,
+      color: index == 0 ? kPrimaryColor : KColorNotIndexOne,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(25.0)),
+        borderRadius: BorderRadius.all(Radius.circular(30.0)),
       ),
       child: SizedBox(
         width: 75,
@@ -31,10 +32,10 @@ class SmallDisplayForcast extends StatelessWidget {
               padding: const EdgeInsets.only(top: 4.0, bottom: 0.8),
               child: Text(
                 forcastDay.substring(0, forcastDay.length).toUpperCase(),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w400,
+                  color: index != 0 ? kPrimaryColor : KColorNotIndexOne,
+                  fontWeight: FontWeight.w600,
                   letterSpacing: 0.9,
                 ),
                 textScaleFactor: 0.9,
@@ -48,8 +49,8 @@ class SmallDisplayForcast extends StatelessWidget {
             ),
             Text(
               '${futureApiData.forecast?.forecastday[index].day.maxtempC?.floor()}\u00b0',
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: index != 0 ? kPrimaryColor : KColorNotIndexOne,
               ),
             ),
             Text(

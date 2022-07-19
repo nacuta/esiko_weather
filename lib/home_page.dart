@@ -1,8 +1,10 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:testingbloc/Views/search_page.dart';
 import 'package:testingbloc/Widgets/glassmorphism.dart';
+import 'package:testingbloc/Widgets/hydro.dart';
 import 'package:testingbloc/bloc/data_from_json_bloc.dart';
 import 'package:testingbloc/constants.dart';
 import 'package:testingbloc/Views/table_glassmorphism_view.dart';
@@ -66,7 +68,6 @@ class _HomePageInitialState extends State<HomePageInitial> {
       return Scaffold(
         body: SafeArea(
           child: Container(
-            // width: double.infinity,
             decoration: const BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.fitHeight,
@@ -74,7 +75,6 @@ class _HomePageInitialState extends State<HomePageInitial> {
               ),
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Column(
@@ -83,8 +83,9 @@ class _HomePageInitialState extends State<HomePageInitial> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconButton(
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.more_vert,
+                            color: kPrimaryColor,
                             size: 25,
                           ),
                           onPressed: () {},
@@ -98,7 +99,10 @@ class _HomePageInitialState extends State<HomePageInitial> {
                             ),
                             Text(
                               apiResponse.location!.name,
-                              style: googleFontStyle.copyWith(fontSize: 25),
+                              style: TextStyle(
+                                  color: Colors.deepPurple.shade700,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
@@ -130,7 +134,7 @@ class _HomePageInitialState extends State<HomePageInitial> {
                       children: [
                         Text(
                           dateNow,
-                          style: googleFontStyle.copyWith(fontSize: 15),
+                          style: googleFontStyle.copyWith(fontSize: 14),
                         )
                       ],
                     ),
@@ -139,12 +143,13 @@ class _HomePageInitialState extends State<HomePageInitial> {
                       codeTextSituation: apiResponse
                           .forecast!.forecastday[0].day.condition.text,
                     ),
+                    Hydro(),
                     // Implement Chart for hourly temperature
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: SizedBox(
                         // margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                        height: 200,
+                        height: 190,
                         width: MediaQuery.of(context).size.width * 2,
                         child: Padding(
                           padding: const EdgeInsets.only(top: 10),
