@@ -21,28 +21,27 @@ class ApiData {
       params['aqi'] = airQuality;
       params['alerts'] = alerts;
     }
-    // fot http request
-    // final url = Uri.http(_host, unencodedPath, params);
-    // final results = await http.get(url);
-    // if (results.statusCode == 200) {
-    //   final decodedJson = json.jsonDecode(results.body);
-    // var x = CurrentWeather.fromJson(decodedJson);
-    // return x;
-    // } else {
-    //      return CurrentWeather.withError("Data not found / Connection issue");
-
-    // }
-
-    try {
-      // for local json
-      String jsonContent = await rootBundle.loadString("assets/appl.json");
-      final decodedJson = json.jsonDecode(jsonContent);
+    // for http request
+    final url = Uri.http(_host, unencodedPath, params);
+    final results = await http.get(url);
+    if (results.statusCode == 200) {
+      final decodedJson = json.jsonDecode(results.body);
       var x = CurrentWeather.fromJson(decodedJson);
       return x;
-    } catch (error, stacktrace) {
-      print("Exception occured: $error stackTrace: $stacktrace");
+    } else {
       return CurrentWeather.withError("Data not found / Connection issue");
     }
+
+    // try {
+    //   // for local json
+    //   String jsonContent = await rootBundle.loadString("assets/appl.json");
+    //   final decodedJson = json.jsonDecode(jsonContent);
+    //   var x = CurrentWeather.fromJson(decodedJson);
+    //   return x;
+    // } catch (error, stacktrace) {
+    //   print("Exception occured: $error stackTrace: $stacktrace");
+    //   return CurrentWeather.withError("Data not found / Connection issue");
+    // }
   }
 }
 

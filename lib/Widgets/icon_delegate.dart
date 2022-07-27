@@ -8,7 +8,9 @@ class IconDelegate extends StatelessWidget {
   final String codetext;
   @override
   Widget build(BuildContext context) {
-    return _getIconWidget(codetext: codetext);
+    return Align(
+        alignment: Alignment.bottomRight,
+        child: _getIconWidget(codetext: codetext));
   }
 }
 
@@ -18,7 +20,7 @@ Widget _getIconWidget({String? codetext}) {
     //               "icon": "//cdn.weatherapi.com/weather/64x64/day/113.png",
     //               "code": 1000
     case "Sunny":
-      return const Align(alignment: Alignment.bottomRight, child: Sun());
+      return const Sun();
     case "Partly cloudy":
       return const CloudAndSun();
     //  "text": "Partly cloudy",

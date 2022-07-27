@@ -23,13 +23,10 @@ class _ChartPageViewState extends State<ChartPageView> {
 
   TextStyle get style => TextStyle(
         color: kPrimaryColor,
-        // color: Color(0xFF5156ED),
         fontWeight: FontWeight.bold,
-        fontSize: 16,
+        fontSize: 14,
       );
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
-    // margin: 10,
-
     getTitles() {
       var yy = DateTime.parse(hourlList[value.toInt()].time).hour;
       String textToDispaly = "";
@@ -43,15 +40,15 @@ class _ChartPageViewState extends State<ChartPageView> {
 
     return SideTitleWidget(
       axisSide: meta.axisSide,
-      space: 5,
+      space: 3,
       child: Text(getTitles(), style: style),
     );
   }
 
   SideTitles get _bottomTitles => SideTitles(
         showTitles: true,
-        reservedSize: 32,
-        interval: 4,
+        reservedSize: 25,
+        interval: 3,
         getTitlesWidget: bottomTitleWidgets,
       );
 
@@ -91,7 +88,7 @@ class _ChartPageViewState extends State<ChartPageView> {
               dotData: FlDotData(
                 show: false,
               ),
-              barWidth: 4,
+              barWidth: 5,
             ),
           ],
           borderData: FlBorderData(

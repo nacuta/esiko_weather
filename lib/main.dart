@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:testingbloc/bloc/data_from_json_bloc.dart';
+import 'package:testingbloc/bloc/searchBloc/search_bloc.dart';
 import 'package:testingbloc/chart.dart';
 import 'package:testingbloc/home_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations(
+    [DeviceOrientation.portraitUp],
+  ); // To turn off landscape mode
   runApp(const MyApp());
 }
 
@@ -25,8 +31,16 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
-          body: BlocProvider(
-        create: (context) => DataFromJsonBloc()..add(GetListFromJson('Arad')),
+          body: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) =>
+                DataFromJsonBloc()..add(GetListFromJson('Arad')),
+          ),
+          BlocProvider(
+            create: (context) => SearchBloc(),
+          ),
+        ],
         child: const HomePageInitial(),
       )),
     );

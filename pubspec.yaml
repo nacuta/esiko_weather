@@ -37,6 +37,7 @@ dependencies:
   flutter_bloc: ^8.0.1
 
 dev_dependencies:
+  anim_search_bar: ^2.0.2
   equatable: ^2.0.3
   fl_chart: ^0.55.0
   flutter_charts: any

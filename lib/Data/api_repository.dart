@@ -4,8 +4,8 @@ import 'package:testingbloc/Data/current.dart';
 class ApiRepository {
   final _provider = ApiData();
 
-  Future<CurrentWeather> getApiResponse() {
-    return _provider.getDataFromJson('Arad');
+  Future<CurrentWeather> getApiResponse(String query) {
+    return _provider.getDataFromJson(query);
   }
 }
 
