@@ -1,16 +1,10 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:testingbloc/bloc/data_from_json_bloc.dart';
-import 'package:testingbloc/bloc/searchBloc/search_bloc.dart';
-import 'package:testingbloc/constants.dart';
-import 'package:testingbloc/home_page.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
-  final searchBloc;
-  // final cityBloc;
-  CustomSearchDelegate(this.searchBloc);
+  final DataFromJsonBloc _searchBloc;
+  CustomSearchDelegate(this._searchBloc);
 
   @override
   ThemeData appBarTheme(BuildContext context) {
@@ -39,7 +33,7 @@ class CustomSearchDelegate extends SearchDelegate {
           query = '';
           showSuggestions(context);
         },
-        icon: Icon(Icons.clear),
+        icon: const Icon(Icons.clear),
       ),
     ];
   }
@@ -62,19 +56,45 @@ class CustomSearchDelegate extends SearchDelegate {
 // build the show query
   @override
   Widget buildResults(BuildContext context) {
-    List<String> matchQuery = [];
-    for (var cities in searchHistory) {
-      if (cities.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(cities);
-      }
+    _searchBloc.add(GetListFromJson(query));
+    try {
+      _searchBloc.add(GetListFromJson(query));
+    } catch (err) {
+      return Text(err.toString());
     }
-    return ListTile(
-      title: Text(query),
-      leading: Icon(Icons.location_city),
-      onTap: () {
-        close(context, query);
-      },
-    );
+
+    return BlocBuilder<DataFromJsonBloc, DataFromJsonState>(
+        bloc: _searchBloc,
+        builder: (BuildContext context, DataFromJsonState state) {
+          if (state is DataFromJsonEror) {
+            return const Text('No city provided!');
+          }
+
+          if (state is DataFromJsonLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (state is DataFromJsonEror) {
+            return const Center(
+              child: Text('No city provided!'),
+            );
+          }
+
+          if (state is DataFromJsonLoaded) {
+            return ListTile(
+              leading: const Icon(Icons.location_city),
+              title: Text(query, maxLines: 1, overflow: TextOverflow.ellipsis),
+              dense: true,
+              onTap: () {
+                close(context, query);
+              },
+            );
+          }
+
+          return Container();
+        });
   }
 
   @override
@@ -95,114 +115,12 @@ class CustomSearchDelegate extends SearchDelegate {
             close(context, result);
             showResults(context);
           },
-          child: Container(
-            child: ListTile(
-              title: Text(result),
-            ),
+          child: ListTile(
+            leading: const Icon(Icons.location_city),
+            title: Text(result),
           ),
         );
       }),
-    );
-  }
-
-  // final suggestions = query.isEmpty ? searchHistory : query;
-  // // : _data.where((int i) => '$i'.startsWith(query));
-
-  // return _SuggestionList(
-  //   query: query,
-  //   suggestions: searchHistory,
-  //   onSelected: (String? suggestion) {
-  //     query = suggestion!;
-  //     showResults(context);
-  //   },
-  // );
-}
-
-// // Search Page
-// import 'package:flutter/material.dart';
-// import 'package:testingbloc/constants.dart';
-
-// class SearchPage extends StatelessWidget {
-//   const SearchPage({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       extendBodyBehindAppBar: true,
-//       appBar: AppBar(
-//           iconTheme: IconThemeData(
-//             color: kPrimaryColor,
-//           ),
-//           backgroundColor: Colors.transparent,
-//           elevation: 0, //change your color here
-//           // The search area here
-//           title: Container(
-//             width: double.infinity,
-//             height: 40,
-//             decoration: BoxDecoration(
-//                 color: Colors.white, borderRadius: BorderRadius.circular(5)),
-//             child: Center(
-//               child: TextField(
-//                 decoration: InputDecoration(
-//                     prefixIcon: Icon(Icons.search, color: kPrimaryColor),
-//                     suffixIcon: IconButton(
-//                       icon: Icon(Icons.clear, color: kPrimaryColor),
-//                       onPressed: () {
-//                         /* Clear the search field */
-//                       },
-//                     ),
-//                     hintText: 'Search...',
-//                     border: InputBorder.none),
-//               ),
-//             ),
-//           )),
-//       body: Container(
-//         decoration: const BoxDecoration(
-//           image: DecorationImage(
-//             fit: BoxFit.fill,
-//             image: AssetImage("assets/background.jpg"),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-class _SuggestionList extends StatelessWidget {
-  const _SuggestionList({this.suggestions, this.query, this.onSelected});
-
-  final List<String?>? suggestions;
-  final String? query;
-  final ValueChanged<String?>? onSelected;
-
-  @override
-  Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    return ListView.builder(
-      itemCount: suggestions?.length,
-      itemBuilder: (BuildContext context, int i) {
-        final String? suggestion = suggestions![i];
-        return ListTile(
-          leading:
-              query!.isEmpty ? const Icon(Icons.history) : const Icon(null),
-          title: RichText(
-            text: TextSpan(
-              text: suggestion?.substring(0, query?.length),
-              style: theme.textTheme.subtitle2
-                  ?.copyWith(fontWeight: FontWeight.bold),
-              children: <TextSpan>[
-                TextSpan(
-                  text: suggestion?.substring(query!.length),
-                  style: theme.textTheme.subtitle2,
-                ),
-              ],
-            ),
-          ),
-          onTap: () {
-            onSelected!(suggestion);
-          },
-        );
-      },
     );
   }
 }
