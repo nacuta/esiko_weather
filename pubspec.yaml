@@ -35,7 +35,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.1
-  location: ^4.2.0
+  location: ^4.4.0
 
 dev_dependencies:
   anim_search_bar: ^2.0.2

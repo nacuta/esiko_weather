@@ -14,3 +14,11 @@ class GetListFromJson extends DataFromJsonEvent {
   @override
   List<Object?> get props => [city];
 }
+
+class ErrorDataFromJsonEvent extends DataFromJsonEvent {}
+
+class DataFromJsonUpdated extends DataFromJsonEvent {
+  final CurrentWeather apiData;
+
+  DataFromJsonUpdated(this.apiData);
+}

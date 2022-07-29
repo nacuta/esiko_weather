@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
-import '../Data/api_repository.dart';
-import '../Data/current.dart';
+import '../../Data/api_repository.dart';
+import '../../Data/current.dart';
 import 'package:flutter/foundation.dart';
 // import 'package:testingbloc/Data/current.dart';
 
@@ -18,10 +18,10 @@ class DataFromJsonBloc extends Bloc<DataFromJsonEvent, DataFromJsonState> {
       try {
         emit(DataFromJsonLoading(event.city));
         final apiData = await api.getApiResponse(event.city);
-        emit(DataFromJsonLoaded(apiData));
         if (apiData.error != null) {
           emit(DataFromJsonEror(apiData.error));
         }
+        emit(DataFromJsonLoaded(apiData));
       } on NetworkError {
         emit(DataFromJsonEror(
             'Faild to fetch data, check if your device is online!'));

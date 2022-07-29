@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:testingbloc/bloc/data_from_json_bloc.dart';
+import 'package:testingbloc/bloc/data_bloc/data_from_json_bloc.dart';
 import 'package:testingbloc/home_page.dart';
+
+import 'Widgets/routes.dart';
+import 'bloc/search_bloc/search_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,17 +25,23 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Weather app',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        body: BlocProvider(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
           create: (context) => DataFromJsonBloc(),
-          child: const HomePageInitial(),
         ),
+        BlocProvider(
+          create: (context) => SearchBloc(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Weather app',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const HomePageInitial(),
+        routes: Routes.mainRoute,
       ),
     );
   }

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:testingbloc/bloc/data_from_json_bloc.dart';
+import 'package:testingbloc/Data/api_data.dart';
+import 'package:testingbloc/bloc/data_bloc/data_from_json_bloc.dart';
+
+import '../bloc/search_bloc/search_bloc.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
   final DataFromJsonBloc _searchBloc;
-  CustomSearchDelegate(this._searchBloc);
 
+  CustomSearchDelegate(this._searchBloc);
   @override
   ThemeData appBarTheme(BuildContext context) {
     return Theme.of(context).copyWith(
@@ -24,6 +27,7 @@ class CustomSearchDelegate extends SearchDelegate {
     "Iasi"
   ];
 
+  late BuildContext oldContext;
 // clear the input text
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -56,33 +60,25 @@ class CustomSearchDelegate extends SearchDelegate {
 // build the show query
   @override
   Widget buildResults(BuildContext context) {
-    _searchBloc.add(GetListFromJson(query));
-    try {
-      _searchBloc.add(GetListFromJson(query));
-    } catch (err) {
-      return Text(err.toString());
-    }
+    var search = BlocProvider.of<SearchBloc>(context);
+    search.add(FetchCityEvent(query));
 
-    return BlocBuilder<DataFromJsonBloc, DataFromJsonState>(
-        bloc: _searchBloc,
-        builder: (BuildContext context, DataFromJsonState state) {
-          if (state is DataFromJsonEror) {
-            return const Text('No city provided!');
-          }
-
-          if (state is DataFromJsonLoading) {
+    return BlocBuilder<SearchBloc, SearchState>(
+        bloc: search,
+        builder: (BuildContext context, SearchState state) {
+          if (state is SearchLoading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
 
-          if (state is DataFromJsonEror) {
+          if (state is SearchError) {
             return const Center(
               child: Text('No city provided!'),
             );
           }
 
-          if (state is DataFromJsonLoaded) {
+          if (state is SearchLoaded) {
             return ListTile(
               leading: const Icon(Icons.location_city),
               title: Text(query, maxLines: 1, overflow: TextOverflow.ellipsis),

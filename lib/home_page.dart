@@ -1,11 +1,13 @@
 import 'package:flutter/gestures.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:testingbloc/Views/search_page.dart';
 import 'package:testingbloc/Widgets/glassmorphism.dart';
 import 'package:testingbloc/Widgets/hydro.dart';
-import 'package:testingbloc/bloc/data_from_json_bloc.dart';
+import 'package:testingbloc/bloc/data_bloc/data_from_json_bloc.dart';
 import 'package:testingbloc/constants.dart';
 import 'package:testingbloc/Views/table_glassmorphism_view.dart';
 import 'package:testingbloc/Views/temp_and_icon.dart';
@@ -14,6 +16,7 @@ import 'Data/current.dart';
 import 'Data/api_data.dart';
 import 'Views/small_display_forcast.dart';
 import 'package:testingbloc/utils.dart';
+import 'package:location/location.dart' as loc;
 
 import 'Widgets/chart.dart';
 
@@ -26,10 +29,22 @@ class HomePageInitial extends StatefulWidget {
 
 class _HomePageInitialState extends State<HomePageInitial> {
   final blocSearch = DataFromJsonBloc();
+  late String locationGiven;
+  final loc.Location whereWeAre = loc.Location();
+
+  @override
+  void initState() {
+    whereWeAre.getLocation().then((result) {
+      locationGiven = "${result.latitude}, ${result.longitude}";
+      print(locationGiven);
+      locationGiven.runtimeType;
+      context.read<DataFromJsonBloc>().add(GetListFromJson(locationGiven));
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    context.read<DataFromJsonBloc>().add(GetListFromJson('Arad'));
     return BlocListener<DataFromJsonBloc, DataFromJsonState>(
       listener: (context, state) {
         if (state is DataFromJsonEror) {
@@ -43,10 +58,14 @@ class _HomePageInitialState extends State<HomePageInitial> {
       child: BlocBuilder<DataFromJsonBloc, DataFromJsonState>(
           builder: (context, state) {
         if (state is DataFromJsonInitial) {
-          return Scaffold(body: Center(child: Text(state.toString())));
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         }
         if (state is DataFromJsonLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         }
         if (state is DataFromJsonLoaded) {
           return _firstPageView(context, state.apiResponse);
@@ -57,7 +76,8 @@ class _HomePageInitialState extends State<HomePageInitial> {
     );
   }
 
-  Widget _firstPageView(BuildContext context, CurrentWeather? apiResponse) {
+  Widget _firstPageView(
+      BuildContext firstViewcontext, CurrentWeather? apiResponse) {
     if (apiResponse != null) {
       List<Forecastday>? forecast = apiResponse.forecast?.forecastday;
       var currentTemp = apiResponse.current!.tempC.toInt();
@@ -66,7 +86,7 @@ class _HomePageInitialState extends State<HomePageInitial> {
       var dateNow = date.substring(0, 10);
 
       return BlocProvider(
-        create: (context) => DataFromJsonBloc(),
+        create: (blocProviderContext) => DataFromJsonBloc(),
         child: Scaffold(
           backgroundColor: Colors.transparent,
           // resizeToAvoidBottomInset: true,
@@ -96,17 +116,16 @@ class _HomePageInitialState extends State<HomePageInitial> {
                 IconButton(
                     onPressed: () async {
                       var city = await showSearch(
-                          context: context,
+                          context: firstViewcontext,
                           delegate: CustomSearchDelegate(
                             BlocProvider.of<DataFromJsonBloc>(context),
                           ));
                       print('City $city');
-                      // context.watch<DataFromJsonBloc>().state;
-                      // if (city.isNotEmpty) {
-                      //   context
-                      //       .read<DataFromJsonBloc>()
-                      //       .add(GetListFromJson(city));
-                      // }
+                      if (city.isNotEmpty) {
+                        context
+                            .read<DataFromJsonBloc>()
+                            .add(GetListFromJson(city));
+                      }
                     },
                     icon: Icon(
                       Icons.search,
