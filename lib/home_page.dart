@@ -7,10 +7,12 @@ import 'package:intl/intl.dart';
 import 'package:testingbloc/Views/search_page.dart';
 import 'package:testingbloc/Widgets/glassmorphism.dart';
 import 'package:testingbloc/Widgets/hydro.dart';
+import 'package:testingbloc/bloc/cubit/weather_cubit.dart';
 import 'package:testingbloc/bloc/data_bloc/data_from_json_bloc.dart';
 import 'package:testingbloc/constants.dart';
 import 'package:testingbloc/Views/table_glassmorphism_view.dart';
 import 'package:testingbloc/Views/temp_and_icon.dart';
+import 'package:testingbloc/pages/new_design_page.dart';
 import 'package:testingbloc/search.dart';
 import 'Data/current.dart';
 import 'Data/api_data.dart';
@@ -47,6 +49,7 @@ class _HomePageInitialState extends State<HomePageInitial> {
   Widget build(BuildContext context) {
     return BlocListener<DataFromJsonBloc, DataFromJsonState>(
       listener: (context, state) {
+        context.read<DataFromJsonBloc>();
         if (state is DataFromJsonEror) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -68,7 +71,10 @@ class _HomePageInitialState extends State<HomePageInitial> {
           );
         }
         if (state is DataFromJsonLoaded) {
-          return _firstPageView(context, state.apiResponse);
+          return NewDesignPage(
+            context: context,
+            apiResponse: state.apiResponse,
+          );
         } else {
           return Container();
         }
@@ -117,9 +123,7 @@ class _HomePageInitialState extends State<HomePageInitial> {
                     onPressed: () async {
                       var city = await showSearch(
                           context: firstViewcontext,
-                          delegate: CustomSearchDelegate(
-                            BlocProvider.of<DataFromJsonBloc>(context),
-                          ));
+                          delegate: CustomSearchDelegate('Enter a city'));
                       print('City $city');
                       if (city.isNotEmpty) {
                         context
@@ -151,49 +155,6 @@ class _HomePageInitialState extends State<HomePageInitial> {
                       children: [
                         Column(
                           children: [
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //   children: [
-                            //     Row(
-                            //       children: [
-                            //         Icon(
-                            //           Icons.location_on_outlined,
-                            //           size: 25,
-                            //           color: Colors.deepPurple.shade700,
-                            //         ),
-                            //         Text(
-                            //           apiResponse.location!.name,
-                            //           style: TextStyle(
-                            //               color: Colors.deepPurple.shade700,
-                            //               fontSize: 20,
-                            //               fontWeight: FontWeight.bold),
-                            //         ),
-                            //       ],
-                            //     ),
-                            //     // Todo : Implement a search bar for location to be added
-                            //     // IconButton(
-                            //     //   icon: const Icon(
-                            //     //     Icons.search,
-                            //     //     size: 30,
-                            //     //   ),
-                            //     //   onPressed: () async {
-                            //     //     // // method to show the search bar
-                            //     //     // showSearch(
-                            //     //     //   context: context,
-                            //     //     //   // delegate to customize the search bar
-                            //     //     //   delegate: CustomSearchDelegate(),
-                            //     //     // );
-
-                            //     //     final city = await Navigator.of(context)
-                            //     //         .push(SearchPage.route());
-                            //     //     await context
-                            //     //         .read<DataFromJsonBloc>()
-                            //     //         .getApiResponse(city);
-                            //     //   },
-                            //     // ),
-                            //   ],
-                            // ),
-
                             Container(
                               margin: const EdgeInsets.only(top: 75),
                               child: Row(

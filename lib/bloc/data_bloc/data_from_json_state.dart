@@ -16,7 +16,7 @@ class DataFromJsonLoading extends DataFromJsonState {
 
 class DataFromJsonLoaded extends DataFromJsonState {
   final CurrentWeather apiResponse;
-  DataFromJsonLoaded(this.apiResponse);
+  DataFromJsonLoaded({required this.apiResponse});
 
   @override
   List<Object?> get props => [apiResponse];

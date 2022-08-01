@@ -6,9 +6,9 @@ import 'package:testingbloc/bloc/data_bloc/data_from_json_bloc.dart';
 import '../bloc/search_bloc/search_bloc.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
-  final DataFromJsonBloc _searchBloc;
+  final String hintText;
 
-  CustomSearchDelegate(this._searchBloc);
+  CustomSearchDelegate(this.hintText) : super(searchFieldLabel: hintText);
   @override
   ThemeData appBarTheme(BuildContext context) {
     return Theme.of(context).copyWith(
@@ -74,7 +74,7 @@ class CustomSearchDelegate extends SearchDelegate {
 
           if (state is SearchError) {
             return const Center(
-              child: Text('No city provided!'),
+              child: Text('No valid city provided!'),
             );
           }
 

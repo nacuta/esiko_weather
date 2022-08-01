@@ -18,10 +18,13 @@ class DataFromJsonBloc extends Bloc<DataFromJsonEvent, DataFromJsonState> {
       try {
         emit(DataFromJsonLoading(event.city));
         final apiData = await api.getApiResponse(event.city);
+
         if (apiData.error != null) {
           emit(DataFromJsonEror(apiData.error));
         }
-        emit(DataFromJsonLoaded(apiData));
+        emit(DataFromJsonLoaded(
+          apiResponse: apiData,
+        ));
       } on NetworkError {
         emit(DataFromJsonEror(
             'Faild to fetch data, check if your device is online!'));

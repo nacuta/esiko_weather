@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'bloc/cubit/weather_cubit.dart';
+
 String normalizeStringToParse(String date) {
   var aa = date.split(' ');
   if (aa[1].length <= 4) {
