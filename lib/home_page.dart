@@ -172,6 +172,7 @@ class _HomePageInitialState extends State<HomePageInitial> {
                               currentTem: currentTemp,
                               codeTextSituation: apiResponse
                                   .forecast!.forecastday[0].day.condition.text,
+                              isDay: apiResponse.current!.isDay,
                             ),
                             const Hydro(),
                             // Implement Chart for hourly temperature

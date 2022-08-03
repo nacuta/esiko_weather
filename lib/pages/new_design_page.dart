@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:testingbloc/Data/current.dart';
 import 'package:testingbloc/Views/search_page.dart';
+import 'package:testingbloc/Widgets/icon_delegate.dart';
 import 'package:testingbloc/bloc/data_bloc/data_from_json_bloc.dart';
 import 'package:testingbloc/constants.dart';
 
@@ -28,12 +29,13 @@ class NewDesignPage extends StatelessWidget {
     List<Forecastday>? forecastList = apiResponse.forecast!.forecastday;
 
     var unit = context.watch<WeatherCubit>().state.temperatureUnits;
+    final cityBlocRead = context.read<DataFromJsonBloc>();
     print(unit.runtimeType);
     print(unit);
     var degree = '\u00B0';
     bool isCelsius = unit == 1 ? true : false;
-    Color isSelectedColor = unit == 2 ? Colors.black : Colors.grey;
-    Color isCelsiusSelected = unit == 1 ? Colors.black : Colors.grey;
+    Color isSelectedColor = unit == 2 ? const Color(0xff002b30) : Colors.grey;
+    Color isCelsiusSelected = unit == 1 ? const Color(0xff002b30) : Colors.grey;
 
     return SafeArea(
         top: true,
@@ -42,7 +44,7 @@ class NewDesignPage extends StatelessWidget {
           appBar: AppBar(
             leading: const Icon(
               Icons.place,
-              color: Colors.black,
+              color: Color(0xff002b30),
             ),
             elevation: 0,
             backgroundColor: Colors.transparent,
@@ -50,7 +52,7 @@ class NewDesignPage extends StatelessWidget {
               apiResponse.location!.name,
               textAlign: TextAlign.center,
               style: GoogleFonts.lato(
-                color: Colors.black,
+                color: const Color(0xff002b30),
                 fontSize: 17,
                 fontWeight: FontWeight.w500,
                 letterSpacing: 1.36,
@@ -64,9 +66,7 @@ class NewDesignPage extends StatelessWidget {
                         delegate: CustomSearchDelegate('Enter a city'));
                     print('City $city');
                     if (city.isNotEmpty) {
-                      context
-                          .read<DataFromJsonBloc>()
-                          .add(GetListFromJson(city));
+                      cityBlocRead.add(GetListFromJson(city));
                     }
                   },
                   color: Colors.black,
@@ -76,16 +76,29 @@ class NewDesignPage extends StatelessWidget {
             ],
           ),
           body: Container(
-            color: const Color(0xff6EF7E6),
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                  // Color(0xff0093E9),
+                  Color(0xff80D0C7),
+                  Color(0xff5BC0EB),
+                  // linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+                ])),
             child: Column(
               children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 56),
-                  width: 226,
-                  height: 204,
-                  child: Image.asset(
-                    'assets/suncloud.png',
-                  ),
+                // Container(
+                //   margin: const EdgeInsets.only(top: 26),
+                //   width: 266,
+                //   height: 204,
+                //   child: Image.asset(
+                //     'assets/sunInClouds.png',
+                //   ),
+                // ),
+                IconDelegate(
+                  codetext: apiResponse.current!.condition.code.toString(),
+                  isDay: apiResponse.current!.isDay,
                 ),
                 const SizedBox(
                   height: 10,
@@ -94,7 +107,7 @@ class NewDesignPage extends StatelessWidget {
                   apiResponse.current!.condition.text.toString(),
                   textAlign: TextAlign.center,
                   style: GoogleFonts.lato(
-                    color: Color(0xff002b30),
+                    color: const Color(0xff002b30),
                     fontSize: 20,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 1.60,
@@ -109,7 +122,7 @@ class NewDesignPage extends StatelessWidget {
                       : '${apiResponse.current!.tempF.toInt()}$degree',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.lato(
-                    color: const Color(0xff000731),
+                    color: const Color(0xff002b30),
                     fontSize: 78,
                     // fontFamily: "Poppins",
                     fontWeight: FontWeight.w600,
@@ -145,7 +158,6 @@ class NewDesignPage extends StatelessWidget {
                     TextButton(
                       onPressed: () {
                         context.read<WeatherCubit>().toFahrenheit();
-                        isSelectedColor = Colors.black;
                       },
                       child: Text(
                         "F°",
@@ -168,7 +180,7 @@ class NewDesignPage extends StatelessWidget {
                   children: [
                     const Icon(
                       Icons.shower_outlined,
-                      color: Color(0xff000aff),
+                      color: Color(0xff23395B),
                       size: 28,
                     ),
                     Padding(
@@ -177,7 +189,7 @@ class NewDesignPage extends StatelessWidget {
                         '${apiResponse.current!.humidity}%',
                         textAlign: TextAlign.center,
                         style: GoogleFonts.lato(
-                          color: const Color(0xff000aff),
+                          color: const Color(0xff23395B),
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                         ),
@@ -188,7 +200,7 @@ class NewDesignPage extends StatelessWidget {
                     ),
                     const Icon(
                       Icons.air_outlined,
-                      color: Color(0xff000aff),
+                      color: Color(0xff23395B),
                       size: 28,
                     ),
                     Padding(
@@ -197,7 +209,7 @@ class NewDesignPage extends StatelessWidget {
                         '${apiResponse.current!.windKph} Km/h',
                         textAlign: TextAlign.center,
                         style: GoogleFonts.lato(
-                          color: const Color(0xff000aff),
+                          color: const Color(0xff23395B),
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                         ),
@@ -221,7 +233,7 @@ class NewDesignPage extends StatelessWidget {
                       ),
                       textAlign: TextAlign.center,
                       style: GoogleFonts.lato(
-                        color: Colors.black,
+                        color: const Color(0xff002b30),
                         fontSize: 25,
                         // fontFamily: "Poppins",
                         fontWeight: FontWeight.w500,
@@ -284,7 +296,7 @@ class NewDesignPage extends StatelessWidget {
               forcastDayOfWeek,
               textAlign: TextAlign.center,
               style: GoogleFonts.lato(
-                color: const Color(0xff58004f),
+                color: const Color(0xff002b30),
                 fontSize: 15,
                 fontWeight: FontWeight.w500,
               ),
@@ -299,7 +311,7 @@ class NewDesignPage extends StatelessWidget {
             forcastTepmerature,
             textAlign: TextAlign.center,
             style: GoogleFonts.lato(
-              color: Colors.black,
+              color: const Color(0xff002b30),
               fontSize: 26,
               fontWeight: FontWeight.w500,
             ),

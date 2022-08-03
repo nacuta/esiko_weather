@@ -6,9 +6,13 @@ import 'package:testingbloc/utils.dart';
 
 class TempAndIcon extends StatelessWidget {
   const TempAndIcon(
-      {super.key, required this.currentTem, required this.codeTextSituation});
+      {super.key,
+      required this.currentTem,
+      required this.codeTextSituation,
+      required this.isDay});
   final int currentTem;
   final String codeTextSituation;
+  final int isDay;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +42,7 @@ class TempAndIcon extends StatelessWidget {
               height: 150,
               child: IconDelegate(
                 codetext: codeTextSituation,
+                isDay: isDay,
               ),
             ),
           ),
