@@ -40,8 +40,9 @@ class _HomePageInitialState extends State<HomePageInitial> {
       locationGiven = "${result.latitude}, ${result.longitude}";
       print(locationGiven);
       locationGiven.runtimeType;
-      context.read<DataFromJsonBloc>().add(GetListFromJson(locationGiven));
+      context.read<DataFromJsonBloc>().add(GetListFromJsonEvent(locationGiven));
     });
+    // context.read<DataFromJsonBloc>().add(GetListFromJsonEvent("Arad"));
     super.initState();
   }
 
@@ -128,7 +129,7 @@ class _HomePageInitialState extends State<HomePageInitial> {
                       if (city.isNotEmpty) {
                         context
                             .read<DataFromJsonBloc>()
-                            .add(GetListFromJson(city));
+                            .add(GetListFromJsonEvent(city));
                       }
                     },
                     icon: Icon(

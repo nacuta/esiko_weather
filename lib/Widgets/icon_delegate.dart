@@ -14,108 +14,82 @@ class IconDelegate extends StatelessWidget {
       width: 266,
       height: 204,
       child: Image.asset(
-        _getIconPath(codetext: codetext, isDay: isDay),
+        getIconPath(codetext: codetext, isDay: isDay),
       ),
     );
   }
-}
 
-// Widget _getIconWidget({String? codetext}) {
-//   switch (codetext) {
-//     // "text": "Sunny",
-//     //               "icon": "//cdn.weatherapi.com/weather/64x64/day/113.png",
-//     //               "code": 1000
-//     case "Sunny":
-//       return const Sun();
-//     case "Partly cloudy":
-//       return const CloudAndSun();
-//     //  "text": "Partly cloudy",
-//     //   "icon": "//cdn.weatherapi.com/weather/64x64/day/116.png",
-//     //   "code": 1003
-//     case "Patchy rain possible":
-//       // "text": "Patchy rain possible",
-//       // "icon": "//cdn.weatherapi.com/weather/64x64/night/176.png",
-//       // "code": 1063
-//       return const Clouds();
-//     case "Clear":
-//       // "text": "Clear",
-//       //  "icon": "//cdn.weatherapi.com/weather/64x64/night/113.png",
-//       //  "code": 1000
-//       return const Sun();
-//     default:
-//       return Container();
-//   }
-// }
-String _getIconPath({required String? codetext, required int isDay}) {
-  switch (codetext) {
-    case "1000":
-      // "day" : "Sunny",
-      var sunny = 'assets/sun.png';
-      // "night" : "Clear",
-      var night = 'assets/code1000night.png';
-      var response = isDay == 1 ? sunny : night;
-      print('${isDay.runtimeType} $isDay');
-      print('raspuns $response ');
-      return response;
-    default:
-      return 'assets/sunInClouds.png';
+  static String getIconPath({required String? codetext, required int isDay}) {
+    switch (codetext) {
+      case "1000":
+        // "day" : "Sunny",
+        var dayIcon = 'assets/sunny1000day.png';
+        // "night" : "Clear",
+        var nightIcon = 'assets/clear1000night.png';
+        var response = isDay == 1 ? dayIcon : nightIcon;
+        return response;
+
+      case "1003":
+// 		"day" : "Partly cloudy",
+        var dayIcon = 'assets/partlyCloudy1003day.png';
+// 		"night" : "Partly cloudy",
+        var nightIcon = 'assets/partlyCloudy1003night.png';
+        var response = isDay == 1 ? dayIcon : nightIcon;
+        return response;
+
+      case "1006":
+      case "1009":
+      case "1030":
+        // "day" : "Cloudy",
+        var dayIcon = 'assets/cloudy1006day.png';
+        // 		"night" : "Cloudy",
+        var nightIcon = 'assets/cloudy1006night.png';
+        var response = isDay == 1 ? dayIcon : nightIcon;
+        return response;
+
+      case "1063":
+        // "day" : "Patchy rain possible",
+        var dayIcon = 'assets/patchyRain1063day.png';
+        // 	"night" : "Patchy rain possible",
+        var nightIcon = 'assets/patchyRain1063night.png';
+        var response = isDay == 1 ? dayIcon : nightIcon;
+        return response;
+
+      case "1066":
+        // "day" : "Patchy snow possible",
+        var dayIcon = 'assets/patchySnow1066day.png';
+        // 	"night" : "Patchy rain possible",
+        var nightIcon = 'assets/patchySnow1066night.png';
+        var response = isDay == 1 ? dayIcon : nightIcon;
+        return response;
+
+      case "1069":
+      case "1072":
+        // "day" : "Patchy sleet possible",
+        var dayIcon = 'assets/patchySleet1069day.png';
+        // 	"night" : "Patchy sleet possible",
+        var nightIcon = 'assets/patchySleet1069night.png';
+        var response = isDay == 1 ? dayIcon : nightIcon;
+        return response;
+
+      // case "1087":
+      //   // "day" : "Thundery outbreaks possible",
+      //   var dayIcon = 'assets/patchySleet1069day.png';
+      //   // 	"night" :"Thundery outbreaks possible",
+      //   var nightIcon = 'assets/patchySleet1069night.png';
+      //   var response = isDay == 1 ? dayIcon : nightIcon;
+      //   return response;
+
+      default:
+        return 'assets/cloudy1006day.png';
+    }
   }
 }
+
+
+
 // [
-// 	{
-// 		"code" : 1000,
-// 		"day" : "Sunny",
-// 		"night" : "Clear",
-// 		"icon" : 113
-// 	},
-// 	{
-// 		"code" : 1003,
-// 		"day" : "Partly cloudy",
-// 		"night" : "Partly cloudy",
-// 		"icon" : 116
-// 	},
-// 	{
-// 		"code" : 1006,
-// 		"day" : "Cloudy",
-// 		"night" : "Cloudy",
-// 		"icon" : 119
-// 	},
-// 	{
-// 		"code" : 1009,
-// 		"day" : "Overcast",
-// 		"night" : "Overcast",
-// 		"icon" : 122
-// 	},
-// 	{
-// 		"code" : 1030,
-// 		"day" : "Mist",
-// 		"night" : "Mist",
-// 		"icon" : 143
-// 	},
-// 	{
-// 		"code" : 1063,
-// 		"day" : "Patchy rain possible",
-// 		"night" : "Patchy rain possible",
-// 		"icon" : 176
-// 	},
-// 	{
-// 		"code" : 1066,
-// 		"day" : "Patchy snow possible",
-// 		"night" : "Patchy snow possible",
-// 		"icon" : 179
-// 	},
-// 	{
-// 		"code" : 1069,
-// 		"day" : "Patchy sleet possible",
-// 		"night" : "Patchy sleet possible",
-// 		"icon" : 182
-// 	},
-// 	{
-// 		"code" : 1072,
-// 		"day" : "Patchy freezing drizzle possible",
-// 		"night" : "Patchy freezing drizzle possible",
-// 		"icon" : 185
-// 	},
+
 // 	{
 // 		"code" : 1087,
 // 		"day" : "Thundery outbreaks possible",

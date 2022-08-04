@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
+import 'package:testingbloc/home_page.dart';
 import '../../Data/api_repository.dart';
 import '../../Data/current.dart';
 import 'package:flutter/foundation.dart';
@@ -10,14 +11,14 @@ part 'data_from_json_event.dart';
 part 'data_from_json_state.dart';
 
 class DataFromJsonBloc extends Bloc<DataFromJsonEvent, DataFromJsonState> {
-  DataFromJsonBloc() : super(DataFromJsonInitial()) {
+  DataFromJsonBloc() : super(DataFromJsonLoading()) {
     final ApiRepository api = ApiRepository();
 
     //first we make the call to server to get the data
-    on<GetListFromJson>((event, emit) async {
+    on<GetListFromJsonEvent>((event, emit) async {
       try {
-        emit(DataFromJsonLoading(event.city));
         final apiData = await api.getApiResponse(event.city);
+        emit(DataFromJsonLoading());
 
         if (apiData.error != null) {
           emit(DataFromJsonEror(apiData.error));

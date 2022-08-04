@@ -66,7 +66,7 @@ class NewDesignPage extends StatelessWidget {
                         delegate: CustomSearchDelegate('Enter a city'));
                     print('City $city');
                     if (city.isNotEmpty) {
-                      cityBlocRead.add(GetListFromJson(city));
+                      cityBlocRead.add(GetListFromJsonEvent(city));
                     }
                   },
                   color: Colors.black,
@@ -248,21 +248,24 @@ class NewDesignPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       contauhcuhcue(
-                          iconData: Icons.wb_sunny_outlined,
+                          iconPath:
+                              forecastList[0].day.condition.code.toString(),
                           forcastTepmerature: isCelsius
                               ? '${forecastList[0].day.maxtempC!.toInt()}'
                               : '${forecastList[0].day.maxtempF!.toInt()}',
                           forcastDayOfWeek: DateFormat('EEE')
                               .format(DateTime.parse(forecastList[0].date))),
                       contauhcuhcue(
-                          iconData: Icons.wb_cloudy_outlined,
+                          iconPath:
+                              forecastList[1].day.condition.code.toString(),
                           forcastTepmerature: isCelsius
                               ? '${forecastList[1].day.maxtempC!.toInt()}'
                               : '${forecastList[1].day.maxtempF!.toInt()}',
                           forcastDayOfWeek: DateFormat('EEE')
                               .format(DateTime.parse(forecastList[1].date))),
                       contauhcuhcue(
-                          iconData: Icons.thunderstorm_outlined,
+                          iconPath:
+                              forecastList[2].day.condition.code.toString(),
                           forcastTepmerature: isCelsius
                               ? '${forecastList[2].day.maxtempC!.toInt()}'
                               : '${forecastList[2].day.maxtempF!.toInt()}',
@@ -276,10 +279,11 @@ class NewDesignPage extends StatelessWidget {
   }
 
   Widget contauhcuhcue({
-    required IconData iconData,
+    required String iconPath,
     required String forcastTepmerature,
     required String forcastDayOfWeek,
   }) {
+    var x = IconDelegate.getIconPath(codetext: iconPath, isDay: 1);
     return Container(
       width: 102,
       height: 142,
@@ -302,11 +306,16 @@ class NewDesignPage extends StatelessWidget {
               ),
             ),
           ),
-          Icon(
-            iconData,
-            color: Colors.white,
-            size: 40,
+          Image.asset(
+            x,
+            width: 70,
+            height: 70,
           ),
+          // Icon(
+          //   iconData,
+          //   color: Colors.white,
+          //   size: 40,
+          // ),
           Text(
             forcastTepmerature,
             textAlign: TextAlign.center,

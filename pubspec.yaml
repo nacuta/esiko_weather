@@ -41,13 +41,13 @@ dependencies:
 dev_dependencies:
   anim_search_bar: ^2.0.2
   equatable: ^2.0.3
-  http: ^0.13.4
   fl_chart: ^0.55.0
   flutter_charts: any
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
   google_fonts: ^3.0.1
+  http: ^0.13.4
   intl: ^0.17.0
 
 # For information on the generic Dart part of this file, see the

@@ -9,9 +9,7 @@ abstract class DataFromJsonState extends Equatable {
 class DataFromJsonInitial extends DataFromJsonState {}
 
 class DataFromJsonLoading extends DataFromJsonState {
-  final String city;
-
-  DataFromJsonLoading(this.city);
+  DataFromJsonLoading();
 }
 
 class DataFromJsonLoaded extends DataFromJsonState {
