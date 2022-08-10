@@ -4,9 +4,8 @@ part of 'weather_cubit.dart';
 class WeatherState extends Equatable {
   final int temperatureUnits;
 
-  const WeatherState({
-    this.temperatureUnits = 1, //TemperatureUnits.celsius,
-  });
+  const WeatherState({required this.temperatureUnits //TemperatureUnits.celsius,
+      });
 
   WeatherState copyWith({
     int? temperatureUnits,
