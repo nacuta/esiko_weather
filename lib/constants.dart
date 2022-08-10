@@ -7,4 +7,12 @@ TextStyle googleFontStyle = GoogleFonts.oswald(
     foreground: Paint()..shader = linearGradient,
     fontSize: 10);
 
+TextStyle kStyleGoogleLato = GoogleFonts.lato(
+  color: KNewPrimaryColor,
+  fontSize: 25,
+  fontWeight: FontWeight.w500,
+);
+
 Color kPrimaryColor = const Color(0xFF5156ED);
+
+Color KNewPrimaryColor = const Color(0xff002b30);
