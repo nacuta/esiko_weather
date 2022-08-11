@@ -16,8 +16,9 @@ class DataFromJsonLoaded extends DataFromJsonState {
   final CurrentWeather apiResponse;
   DataFromJsonLoaded({required this.apiResponse});
 
-  @override
-  List<Object?> get props => [apiResponse];
+  Map<String, dynamic> toJson() {
+    return {'apidata': apiResponse};
+  }
 }
 
 class DataFromJsonEror extends DataFromJsonState {

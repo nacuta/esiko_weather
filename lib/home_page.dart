@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:testingbloc/Views/search_page.dart';
 import 'package:testingbloc/Widgets/glassmorphism.dart';
@@ -34,15 +35,21 @@ class _HomePageInitialState extends State<HomePageInitial> {
   late String locationGiven;
   final loc.Location whereWeAre = loc.Location();
 
+  Future<void> readstorage() async {
+    var storage = await HydratedStorage.webStorageDirectory.stat();
+    print(storage);
+  }
+
   @override
-  void initState() {
-    whereWeAre.getLocation().then((result) {
-      locationGiven = "${result.latitude}, ${result.longitude}";
-      print(locationGiven);
-      locationGiven.runtimeType;
-      context.read<DataFromJsonBloc>().add(GetListFromJsonEvent(locationGiven));
-    });
-    // context.read<DataFromJsonBloc>().add(GetListFromJsonEvent("Arad"));
+  initState() {
+    // readstorage();
+    // whereWeAre.getLocation().then((result) {
+    //   locationGiven = "${result.latitude}, ${result.longitude}";
+    //   print(locationGiven);
+    //   locationGiven.runtimeType;
+    //   context.read<DataFromJsonBloc>().add(GetListFromJsonEvent(locationGiven));
+    // });
+    context.read<DataFromJsonBloc>().add(GetListFromJsonEvent("Arad"));
     super.initState();
   }
 
